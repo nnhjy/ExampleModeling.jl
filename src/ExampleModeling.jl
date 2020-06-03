@@ -4,6 +4,7 @@ include("model.jl")
 include("io.jl")
 export ExampleModel,
     Specs,
+    Indices,
     Params,
     Variables,
     Objectives,

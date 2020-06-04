@@ -28,7 +28,7 @@ end
 variables = Variables(model)
 objectives = Objectives(model)
 
-print(indices)
-print(params)
+println(indices)
+println(params)
 println(variables)
 println(objectives)

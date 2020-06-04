@@ -1,14 +1,14 @@
 using JSON
 
-"""Save object into JSON file.
+"""Saves the given DataType into JSON file.
 
 # Arguments
-- `object`
+- `dtype`
 - `output_path::AbstractString`: Full filepath, e.g., `path.json`.
 """
-function save_json(object, filepath::AbstractString)
+function save_json(dtype, filepath::AbstractString)
     open(filepath, "w") do io
-        JSON.print(io, object)
+        JSON.print(io, dtype)
     end
 end
 
@@ -35,20 +35,20 @@ end
 convert_type(::Type{Array{T, 1}}) where T <: Array = Array{T, 1}
 convert_type(t::Type{T}) where T <: Number = t
 
-"""Load values to type from JSON file.
+"""Loads values from JSON file to given DataType.
 
 # Arguments
-- `type`
+- `dtype`: DataType
 - `filepath::AbstractString`
 """
-function load_json(type, filepath::AbstractString)
+function load_json(dtype, filepath::AbstractString)
     objects = JSON.parsefile(filepath)
     fields = []
-    for (s, t) in zip(fieldnames(type), fieldtypes(type))
+    for (s, t) in zip(fieldnames(dtype), fieldtypes(dtype))
         push!(fields,
               objects[string(s)] |>
               v -> convert(convert_type(t), v) |>
               v -> transform(v, t))
     end
-    type(fields...)
+    dtype(fields...)
 end

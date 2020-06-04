@@ -1,7 +1,9 @@
-using JuMP, Gurobi
+using JuMP, Cbc, Random
 
 push!(LOAD_PATH, dirname(@__DIR__))
 using ExampleModeling
+
+Random.seed!(111)
 
 m, n, k = 2, 3, 5
 a = rand(n)
@@ -15,11 +17,8 @@ indices = Indices(m, n, k)
 params = Params(a, b, c, A, B)
 model = ExampleModel(specs, indices, params)
 
-optimizer = with_optimizer(
-    Gurobi.Optimizer,
-    TimeLimit=60,
-)
-optimize!(model, optimizer)
+set_optimizer(model, Cbc.Optimizer)
+optimize!(model)
 
 if termination_status(model) == MOI.INFEASIBLE
     println("Model is infeasible.")

@@ -9,6 +9,7 @@ export ExampleModel,
     Variables,
     Objectives,
     save_json,
-    load_json
+    load_json,
+    model_to_dtype
 
 end # module

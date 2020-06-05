@@ -1,7 +1,7 @@
 # ExampleModeling.jl
 Documentation for ExampleModeling.jl
 
-## Model
+## Formulation
 We formulate the canonical *mixed-integer linear program* as follows:
 
 $$\begin{aligned}
@@ -38,32 +38,6 @@ The model outputs the variables and objectives.
 *  $f(𝐱,𝐲)= 𝐚𝐱 + 𝐛𝐲$
 
 You can read more about the theory of integer programming from [^1].
-
-
-## API
-### Model
-```@docs
-ExampleModel
-Specs
-Indices
-Params
-Variables
-Objectives
-ExampleModel(::Specs, ::Indices, ::Params)
-Variables(::ExampleModel)
-Objectives(::ExampleModel)
-```
-
-### IO
-```@docs
-save_json
-load_json
-```
-
-### Utility
-```@docs
-model_to_dtype
-```
 
 
 ## References

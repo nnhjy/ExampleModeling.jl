@@ -7,7 +7,8 @@ makedocs(
     modules = [ExampleModeling],
     authors = "Jaan Tollander de Balsch",
     pages = [
-        "Model" => "index.md"
+        "Home" => "index.md",
+        "API" => "api.md"
     ]
 )
 

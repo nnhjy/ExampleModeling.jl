@@ -1,16 +1,14 @@
-using Test, Random, JuMP, Cbc
+using Test, JuMP, Cbc
 using ExampleModeling
 
 # --- Test Model ---
 
-Random.seed!(111)
-
-m, n, k = 2, 3, 5
-a = rand(n)
-b = rand(k)
-c = rand(m)
-A = rand(m, n)
-B = rand(m, k)
+m, n, k = 3, 1, 1
+a = [-8]
+b = [-1]
+c = [14, -33, 20]
+A = reshape([-1, -4, 2], m, n)
+B = reshape([-2, -1, 1], m, n)
 
 specs = Specs()
 indices = Indices(m, n, k)

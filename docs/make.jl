@@ -1,6 +1,4 @@
 using Documenter
-
-push!(LOAD_PATH, dirname(@__DIR__))
 using ExampleModeling
 
 makedocs(

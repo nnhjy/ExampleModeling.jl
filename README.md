@@ -20,7 +20,7 @@ a = [-8]
 b = [-1]
 c = [14, -33, 20]
 A = reshape([-1, -4, 2], m, n)
-B = reshape([-2, -1, 1], m, n)
+B = reshape([-2, -1, 1], m, k)
 
 specs = Specs()
 indices = Indices(m, n, k)

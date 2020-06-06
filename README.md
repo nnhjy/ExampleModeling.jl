@@ -1,6 +1,13 @@
 # ExampleModeling.jl
 This package demonstrates how to build a JuMP model with data structures and save and load these structures to JSON files. We can use it as a design pattern for creating optimization libraries using JuMP.
 
+## Design Principles
+**Decouple** the model from problem instances. The package defines the abstract model, and the problem instance defines the numerical values for the model parameters.
+
+**Do not use global states**. Aim to write functional-style code. Each function should encapsulate their logic without side effects.
+
+**Do not hardcode solvers**. Users should specify which solver they use. If a function requires a solver, it should take the solver as an argument.
+
 ## Development
 We can install the package locally for development using the command:
 ```
@@ -15,6 +22,7 @@ We can initialize and solve the model as follows.
 using JuMP, Cbc
 using ExampleModeling
 
+# Problem specific values, defined by the user.
 m, n, k = 3, 1, 1
 a = [-8]
 b = [-1]
@@ -22,11 +30,13 @@ c = [14, -33, 20]
 A = reshape([-1, -4, 2], m, n)
 B = reshape([-2, -1, 1], m, k)
 
+# Structures, defined by package.
 specs = Specs()
 indices = Indices(m, n, k)
 params = Params(a, b, c, A, B)
 model = ExampleModel(specs, indices, params)
 
+# The solver, defined by the user.
 set_optimizer(model, Cbc.Optimizer)
 optimize!(model)
 
@@ -35,6 +45,7 @@ if termination_status(model) == MOI.INFEASIBLE
     exit()
 end
 
+# Query output values to structures, defined by the package.
 variables = Variables(model)
 objectives = Objectives(model)
 ```

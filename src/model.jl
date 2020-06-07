@@ -3,7 +3,7 @@ using Parameters, JuMP, JuMP.Containers
 """Defines the ExampleModel type."""
 const ExampleModel = Model
 
-"""Specifies the control flow of the model. For example, it can be used to toggle on and off specific constraints or objectives.
+"""Specification for different model scenarios. For example, we can specify toggling on and off certain constraints and objectives.
 
 # Arguments
 - `relax_integer::Bool=false`: If true, relax integer constraints from variables. 

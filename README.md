@@ -1,5 +1,5 @@
 # ExampleModeling.jl
-This package demonstrates how to build a JuMP model with data structures and save and load these structures to JSON files. We can use it as a design pattern for creating optimization libraries using JuMP.
+ExampleModeling.jl demonstrates a design pattern for creating structured optimization libraries using JuMP.
 
 ## Design Principles
 **Decouple** the model from problem instances. The package defines the abstract model, and the problem instance defines the numerical values for the model parameters.

@@ -17,6 +17,7 @@ pkg> dev .
 ## Usage
 In the `example` directory there is [run.jl](examples/runl.jl) example script. 
 
+### Solving the Model
 We can initialize and solve the model as follows.
 ```julia
 using JuMP, Cbc
@@ -50,6 +51,7 @@ variables = Variables(model)
 objectives = Objectives(model)
 ```
 
+### Saving and Loading Results to File
 Next, we define an output directory.
 ```julia
 output_dir = "output"
@@ -70,6 +72,41 @@ params = load_json(Params, joinpath(output_dir, "params.json"))
 variables = load_json(Variables, joinpath(output_dir, "variables.json"))
 objectives = load_json(Objectives, joinpath(output_dir, "objectives.json"))
 ```
+
+### Loading Inputs from File
+We can use files to store and distribute problem instances with different input values. For each instance, we need to create a directory with files or directories of files, preferably in plain text formats, such as JSON or CSV. For example:
+
+```
+instance/
+├─ params/
+│  ├─ param1.csv
+│  └─ param2.csv
+└─ indices.json
+```
+
+We can use `load_json` function if the inputs are in the JSON format required by the structures. Otherwise, we need to create custom constructors for the `Indices` and `Params`. The constructors load values from the appropriate files in the instance directory and then perform the necessary computations to convert them into the arguments for the structure. We can define custom constructors as follows.
+
+```julia
+using ExampleModeling
+
+function Indices(path::AbstractString, ...)
+    # Load the raw values from files in the path. 
+    # Convert raw values to inputs for structure.
+    Indices(...)
+end
+
+function Params(path::AbstractString, ...)
+    # Load the raw values from files in the path.
+    # Convert raw values to inputs for structure.
+    Params(...)
+end
+
+indices = Indices(joinpath("instance", "indices.json"), ...)
+params = Params(joinpath("instance", "params"), ...)
+# ...
+```
+
+We should hardcode these constructors in the package only if there is an apparent general format for the instance files.
 
 ## Tests
 We can run tests using the commands:

@@ -10,7 +10,7 @@ c = [14, -33, 20]
 A = reshape([-1, -4, 2], m, n)
 B = reshape([-2, -1, 1], m, k)
 
-specs = Specs()
+specs = Specs(relax_integer=false)
 indices = Indices(m, n, k)
 params = Params(a, b, c, A, B)
 model = ExampleModel(specs, indices, params)

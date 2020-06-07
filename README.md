@@ -32,7 +32,7 @@ A = reshape([-1, -4, 2], m, n)
 B = reshape([-2, -1, 1], m, k)
 
 # Structures, defined by package.
-specs = Specs()
+specs = Specs(relax_integer=false)
 indices = Indices(m, n, k)
 params = Params(a, b, c, A, B)
 model = ExampleModel(specs, indices, params)

@@ -3,9 +3,13 @@ using Parameters, JuMP, JuMP.Containers
 """Defines the ExampleModel type."""
 const ExampleModel = Model
 
-"""Specifies the control flow of the model. For example, it can be used to toggle on and off specific constraints or objectives."""
+"""Specifies the control flow of the model. For example, it can be used to toggle on and off specific constraints or objectives.
+
+# Arguments
+- `relax_integer::Bool=false`: If true, relax integer constraints from variables. 
+"""
 @with_kw struct Specs
-    spec::Bool=true
+    relax_integer::Bool=false
 end
 
 """Contains indices of the model."""
@@ -45,6 +49,9 @@ function ExampleModel(specs::Specs, indices::Indices, params::Params)
     # Variables
     @variable(model, x[1:n]≥0)
     @variable(model, y[1:k]≥0, Int)
+    if specs.relax_integer
+        unset_integer.(y)
+    end
 
     # Objectives
     @expression(model, f, 

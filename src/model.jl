@@ -1,5 +1,37 @@
 using Parameters, JuMP, JuMP.Containers
 
+
+# --- Utility ---
+
+data(a::Number) = a
+data(a::Array{<:Number, T}) where T = a
+data(a::DenseAxisArray) = a.data
+# TODO: SparseAxisArray?
+data(a) = a
+
+round_int(x::AbstractFloat) = Integer(round(x))
+convert_int(x, ::Type{<:Integer}) = round_int(x)
+convert_int(x, ::Type{Array{T, N}}) where T <: Integer where N = round_int.(x)
+convert_int(x, ::Any) = x
+
+"""The function queries values from the model to data type based on its field names. It extracts values from DenseAxisArray from its `data` field. Then, it converts the values to the corresponding field type. The function rounds integers before conversion because JuMP outputs integer variables as floats. 
+
+# Arguments
+- `dtype`: DataType.
+- `model::Model`: JuMP.Model.
+"""
+function model_to_dtype(dtype, model::Model)
+    fields = []
+    for (n, t) in zip(fieldnames(dtype), fieldtypes(dtype))
+        field = value.(model[n]) |> data |> x -> convert_int(x, t)
+        push!(fields, field)
+    end
+    dtype(fields...)
+end
+
+
+# --- Model ---
+
 """Defines the ExampleModel type."""
 const ExampleModel = Model
 
@@ -39,6 +71,12 @@ end
     f::AbstractFloat
 end
 
+"""Queries the variable values from the model into Variables type."""
+Variables(model::ExampleModel) = model_to_dtype(Variables, model)
+
+"""Queries the objective values from the model into Objectives type."""
+Objectives(model::ExampleModel) = model_to_dtype(Objectives, model)
+
 """Initializes the ExampleModel."""
 function ExampleModel(specs::Specs, indices::Indices, params::Params)
     model = ExampleModel()
@@ -67,35 +105,3 @@ function ExampleModel(specs::Specs, indices::Indices, params::Params)
 
     return model
 end
-
-data(a::Number) = a
-data(a::Array{<:Number, T}) where T = a
-data(a::DenseAxisArray) = a.data
-# TODO: SparseAxisArray?
-data(a) = a
-
-round_int(x::AbstractFloat) = Integer(round(x))
-convert_int(x, t::Type{<:Integer}) = round_int(x)
-convert_int(x, t::Type{Array{T, N}}) where T <: Integer where N = round_int.(x)
-convert_int(x, t) = x
-
-"""The function queries values from the model to data type based on its field names. It extracts values from DenseAxisArray from its `data` field. Then, it converts the values to the corresponding field type. The function rounds integers before conversion because JuMP outputs integer variables as floats. 
-
-# Arguments
-- `dtype`: DataType.
-- `model::Model`: JuMP.Model.
-"""
-function model_to_dtype(dtype, model::Model)
-    fields = []
-    for (n, t) in zip(fieldnames(dtype), fieldtypes(dtype))
-        field = value.(model[n]) |> data |> x -> convert_int(x, t)
-        push!(fields, field)
-    end
-    dtype(fields...)
-end
-
-"""Queries the variable values from the model into Variables type."""
-Variables(model::ExampleModel) = model_to_dtype(Variables, model)
-
-"""Queries the objective values from the model into Objectives type."""
-Objectives(model::ExampleModel) = model_to_dtype(Objectives, model)

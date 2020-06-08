@@ -1,5 +1,30 @@
 using JSON
 
+
+# --- Utility ---
+
+flatten(x::Array{<:Array, 1}) = Iterators.flatten(x)|> collect|> flatten
+flatten(x::Array{<:Number, 1}) = x
+
+shape(x::Array{<:Array, 1}) = vcat(shape(first(x)), [length(x)])
+shape(x::Array{<:Number, 1}) = [length(x)]
+
+mdim(x::Array{<:Array, 1}) = reshape(flatten(x), shape(x)...)
+mdim(x::Array{<:Number, 1}) = x
+
+transform(x::Array, ::Type{Array{T, N}}) where T <: Number where N = mdim(x)
+transform(x::Array, ::Type{Array{T, 1}}) where T <: Array = x
+transform(x::Number, ::Type{T}) where T <: Number = x
+
+function convert_type(::Type{Array{T, N}}) where T <: Number where N
+    reduce((t,_) -> Array{t, 1}, 1:N; init=T)
+end
+convert_type(t::Type{Array{T, 1}}) where T <: Array = t
+convert_type(t::Type{T}) where T <: Number = t
+
+
+# -- IO ---
+
 """Saves the given DataType into JSON file.
 
 # Arguments
@@ -11,29 +36,6 @@ function save_json(dtype, filepath::AbstractString)
         JSON.print(io, dtype)
     end
 end
-
-flatten(x::Array{<:Array, 1}) = Iterators.flatten(x)|> collect|> flatten
-flatten(x::Array{<:Number, 1}) = x
-
-shape(x::Array{<:Array, 1}) = vcat(shape(first(x)), [length(x)])
-shape(x::Array{<:Number, 1}) = [length(x)]
-
-mdim(x::Array{<:Array, 1}) = reshape(flatten(x), shape(x)...)
-mdim(x::Array{<:Number, 1}) = x
-
-transform(x::Array, t::Type{Array{T, N}}) where T <: Number where N = mdim(x)
-transform(x::Array, t::Type{Array{T, 1}}) where T <: Array = x
-transform(x::Number, t::Type{T}) where T <: Number = x
-
-function convert_type(::Type{Array{T, N}}) where T <: Number where N
-    t = T
-    for i in 1:N
-        t = Array{t, 1}
-    end
-    return t
-end
-convert_type(::Type{Array{T, 1}}) where T <: Array = Array{T, 1}
-convert_type(t::Type{T}) where T <: Number = t
 
 """Loads values from JSON file to given DataType.
 

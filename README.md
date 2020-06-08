@@ -1,6 +1,21 @@
 # ExampleModeling.jl
 ExampleModeling.jl demonstrates a design pattern for creating structured optimization libraries using JuMP.
 
+## Structure
+The source code is structured as follows:
+```
+src/
+├─ ExampleModeling.jl
+├─ io.jl
+└─ model.jl
+```
+
+[`model.jl`](./src/model.jl) contains data structures and methods for the model and its inputs and outputs.
+
+[`io.jl`](./src/io.jl) contains functions for saving and loading structures to JSON files.
+
+[`ExampleModeling.jl`](./src/ExampleModeling.jl) exports the library.
+
 ## Design Principles
 **Decouple** the model from problem instances. The package defines the abstract model, and the problem instance defines the numerical values for the model parameters.
 
@@ -15,7 +30,7 @@ pkg> dev .
 ```
 
 ## Usage
-In the `example` directory there is [run.jl](examples/runl.jl) example script. 
+In the `example` directory there is [run.jl](./examples/run.jl) script, which demonstrates the usage.
 
 ### Solving the Model
 We can initialize and solve the model as follows.
@@ -116,7 +131,7 @@ ExampleModeling> test
 ```
 
 ## Documentation
-We can build the documentation using the command:
+We can build the documentation in `docs` directory using the command:
 ```bash
 julia make.jl
 ```

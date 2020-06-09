@@ -70,10 +70,11 @@ Objectives(model::ExampleModel) = model_to_dtype(Objectives, model)
 
 """Initializes the ExampleModel."""
 function ExampleModel(specs::Specs, indices::Indices, params::Params)
-    model = ExampleModel()
-
     @unpack m, n, k = indices
     @unpack a, b, c, A, B = params
+
+    # Initialize the model
+    model = ExampleModel()
 
     # Variables
     @variable(model, x[1:n]≥0)

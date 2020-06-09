@@ -25,32 +25,20 @@ convert_type(t::Type{T}) where T <: Number = t
 
 # -- IO ---
 
-"""Saves the given DataType into JSON file.
-
-# Arguments
-- `dtype`
-- `output_path::AbstractString`: Full filepath, e.g., `path.json`.
-"""
-function save_json(dtype, filepath::AbstractString)
+"""Saves any JSON serializable `object` into JSON file in `filepath`."""
+function save_json(object::Any, filepath::AbstractString)
     open(filepath, "w") do io
-        JSON.print(io, dtype)
+        JSON.print(io, object)
     end
 end
 
-"""Loads values from JSON file to given DataType.
-
-# Arguments
-- `dtype`: DataType
-- `filepath::AbstractString`
-"""
-function load_json(dtype, filepath::AbstractString)
+"""Loads values from JSON file in `filepath` to DataType supplied by `dtype`."""
+function load_json(dtype::DataType, filepath::AbstractString)
     objects = JSON.parsefile(filepath)
-    fields = []
-    for (s, t) in zip(fieldnames(dtype), fieldtypes(dtype))
-        push!(fields,
-              objects[string(s)] |>
-              v -> convert(convert_type(t), v) |>
-              v -> transform(v, t))
-    end
-    dtype(fields...)
+    dtype((
+        objects[string(s)] |>
+        v -> convert(convert_type(t), v) |>
+        v -> transform(v, t)
+        for (s, t) in zip(fieldnames(dtype), fieldtypes(dtype))
+    )...)
 end

@@ -1,4 +1,7 @@
 # ExampleModeling.jl
+[![Build Status](https://travis-ci.org/gamma-opt/ExampleModeling.jl.svg?branch=master)](https://travis-ci.org/gamma-opt/ExampleModeling.jl)
+[![Coverage Status](https://coveralls.io/repos/github/gamma-opt/ExampleModeling.jl/badge.svg?branch=master)](https://coveralls.io/github/gamma-opt/ExampleModeling.jl?branch=master)
+
 ExampleModeling.jl demonstrates a design pattern for creating structured optimization libraries using JuMP.
 
 ## Structure

@@ -1,6 +1,18 @@
 using Test, JuMP, Cbc
+using JuMP.Containers: DenseAxisArray
 
 include(joinpath(dirname(@__DIR__), "src", "model.jl"))
+
+
+# --- Test Utility ---
+
+@test data(DenseAxisArray([1, 2], [:a, :b])) == [1, 2]
+@test data([1, 2]) == [1, 2]
+
+@test round_int(1.1) == 1
+@test convert_int(1.001, Int) == 1
+@test convert_int([1.001, 2.003], Array{Int, 1}) == [1, 2]
+@test convert_int(1.001, Float64) == 1.001
 
 
 # --- Test Model ---

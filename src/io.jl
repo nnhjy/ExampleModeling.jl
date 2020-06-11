@@ -35,10 +35,10 @@ end
 """Loads values from JSON file in `filepath` to DataType supplied by `dtype`."""
 function load_json(dtype::DataType, filepath::AbstractString)
     objects = JSON.parsefile(filepath)
-    dtype((
+    fields = (
         objects[string(s)] |>
         v -> convert(convert_type(t), v) |>
         v -> transform(v, t)
-        for (s, t) in zip(fieldnames(dtype), fieldtypes(dtype))
-    )...)
+        for (s, t) in zip(fieldnames(dtype), fieldtypes(dtype)))
+    dtype(fields...)
 end

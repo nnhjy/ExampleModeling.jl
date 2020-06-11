@@ -14,10 +14,10 @@ convert_int(x, ::Any) = x
 
 """The function queries values from the model to data type based on its field names. It extracts values from DenseAxisArray from its `data` field. Then, it converts the values to the corresponding field type. The function rounds integers before conversion because JuMP outputs integer variables as floats."""
 function model_to_dtype(dtype::DataType, model::Model)
-    dtype((
+    fields = (
         value.(model[n]) |> data |> x -> convert_int(x, t)
-        for (n, t) in zip(fieldnames(dtype), fieldtypes(dtype))
-    )...)
+        for (n, t) in zip(fieldnames(dtype), fieldtypes(dtype)))
+    dtype(fields...)
 end
 
 

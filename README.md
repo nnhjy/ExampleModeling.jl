@@ -1,4 +1,5 @@
 # ExampleModeling.jl
+[![Docs Image](https://img.shields.io/badge/docs-latest-blue.svg)](https://gamma-opt.github.io/ExampleModeling.jl/)
 [![Build Status](https://travis-ci.org/gamma-opt/ExampleModeling.jl.svg?branch=master)](https://travis-ci.org/gamma-opt/ExampleModeling.jl)
 [![Coverage Status](https://coveralls.io/repos/github/gamma-opt/ExampleModeling.jl/badge.svg?branch=master)](https://coveralls.io/github/gamma-opt/ExampleModeling.jl?branch=master)
 
@@ -108,7 +109,7 @@ We can use `load_json` function if the inputs are in the JSON format required by
 using ExampleModeling
 
 function Indices(path::AbstractString, ...)
-    # Load the raw values from files in the path. 
+    # Load the raw values from files in the path.
     # Convert raw values to inputs for structure.
     Indices(...)
 end

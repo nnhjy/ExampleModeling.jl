@@ -5,7 +5,7 @@ makedocs(
     sitename = "ExampleModeling",
     format = Documenter.HTML(),
     modules = [ExampleModeling],
-    authors = "Jaan Tollander de Balsch",
+    authors = "Huang, Jiangyi",
     pages = [
         "Home" => "index.md",
         "API" => "api.md"
@@ -16,5 +16,5 @@ makedocs(
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
 deploydocs(
-    repo = "github.com/gamma-opt/ExampleModeling.jl.git"
+    repo = "https://github.com/nnhjy/ExampleModeling.jl"
 )

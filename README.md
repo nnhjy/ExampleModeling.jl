@@ -30,11 +30,20 @@ src/
 ## Development
 We can install the package locally for development using the command:
 ```
-pkg> dev .
+pkg> dev .     # install in the current working directory
+```
+If we want to install the package in a virtual environment, do the command below first:
+```
+pkg> activate ..    # or the directory towards the environment folder
 ```
 
 ## Usage
 In the `example` directory there is [run.jl](./examples/run.jl) script, which demonstrates the usage.
+
+To run the `run.jl` script:
+```
+julia> include("examples\\run.jl")
+```
 
 ### Solving the Model
 We can initialize and solve the model as follows.

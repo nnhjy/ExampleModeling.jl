@@ -30,9 +30,9 @@ src/
 ## Development
 We can install the package locally for development using the command:
 ```
-pkg> dev .     # install in the current working directory
+pkg> dev .     # install the module/package in current working directory to the activated environment
 ```
-If we want to install the package in a virtual environment, do the command below first:
+If we want to install the package in a customised environment, do the command below to activate the environment first:
 ```
 pkg> activate ..    # or the directory towards the environment folder
 ```

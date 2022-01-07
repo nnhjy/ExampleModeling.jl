@@ -1,7 +1,5 @@
 # ExampleModeling.jl
 [![Docs Image](https://img.shields.io/badge/docs-latest-blue.svg)](https://nnhjy.github.io/ExampleModeling.jl/)
-[![Coverage Status](https://coveralls.io/repos/github/nnhjy/ExampleModeling.jl/badge.svg?branch=master)](https://coveralls.io/github/nnhjy/ExampleModeling.jl?branch=master)
-<!--- [![Build Status](https://travis-ci.org/gamma-opt/ExampleModeling.jl.svg?branch=master)](https://travis-ci.org/gamma-opt/ExampleModeling.jl) -->
 
 ExampleModeling.jl demonstrates a design pattern for creating structured optimization libraries using JuMP. This template originates from [ExampleModeling.jl](https://github.com/gamma-opt/ExampleModeling.jl) designed by Gamma-Opt group at Aalto University.
 

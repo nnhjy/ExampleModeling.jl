@@ -1,6 +1,6 @@
 # ExampleModeling.jl
 [![Docs Image](https://img.shields.io/badge/docs-latest-blue.svg)](https://nnhjy.github.io/ExampleModeling.jl)
-![Runtests](https://github.com/nnhjy/ExampleModeling.jl/.github/workflows/runtests/badge.svg)
+![Runtests](https://github.com/nnhjy/ExampleModeling.jl/workflows/Runtests/badge.svg)
 
 ExampleModeling.jl demonstrates a design pattern for creating structured optimization libraries using JuMP. This template originates from [ExampleModeling.jl](https://github.com/gamma-opt/ExampleModeling.jl) designed by Gamma-Opt group at Aalto University.
 

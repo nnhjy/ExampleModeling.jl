@@ -16,3 +16,9 @@ JSON = ">=0.21"
 JuMP = ">=0.22"
 Parameters = ">=0.12"
 julia = ">=1.6"
+
+[extras]
+Test = "3e272b32-6fb9-11ec-3046-efd2b8df68a3"
+
+[targets]
+test = ["Test"]
